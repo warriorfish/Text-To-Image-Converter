@@ -1,3 +1,7 @@
+/* 
+THANKS TO http://ricardolovelace.com/creating-bitmap-images-with-c-on-windows.html
+*/
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
