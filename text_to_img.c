@@ -16,7 +16,7 @@ int main(int argc, char * argv[])
 {
 
 	if(argc != 5){
-		fprintf(stderr, "Usage %s <text_file_name> <outfile(without extention)> <width> <hight>\n",argv[0]);
+		fprintf(stderr, "Usage %s <text_file_name> <outfile(with bmp extention)> <width> <hight>\n",argv[0]);
 		return 1;
 	}
 
