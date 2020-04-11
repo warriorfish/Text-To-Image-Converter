@@ -1,7 +1,8 @@
 # include <stdio.h>
 # include <math.h>
 # include <stdlib.h>
-# include <bitmap.h>
+# include <string.h>
+# include "bitmap.h"
 
 # define ASCII_MAX 127
 # define PIC_MAX 255
@@ -14,63 +15,47 @@ float scale(int num)
 int main(int argc, char * argv[])
 {
 
-	if(argc != 4){
-		fprintf(stderr, "Usage %s <text_file_name> <width> <hight>\n",argv[0]);
+	if(argc != 5){
+		fprintf(stderr, "Usage %s <text_file_name> <outfile(without extention)> <width> <hight>\n",argv[0]);
 		return 1;
 	}
 
 	else{
+		
+		const int width = atoi(argv[3]);
+		const int hight = atoi(argv[4]);
 
-		int width = atoi(argv[2]);
-		int hight = atoi(argv[3]);
-
-
-		int image[hight][width];
 
 		FILE * txt_file = fopen(argv[1],"r");
+		FILE * img_file = fopen(argv[2],"wb");
+
+		create_image(img_file,width,hight,24,width,hight,0,0);
 
 		int ch,num_ch = 0;
-		int x = 0,y = 0;
+		float value = 0;
 
 		while(num_ch <= (width*hight)){
-			float value = 0;
+
 
 			if(ch != EOF){
 				fscanf(txt_file,"%c",&ch);
 				value = scale(ch);
 			}
+			else{
+				value = 0.0;
+			}
 
-			image[y][x] = value;
 			
-			printf("\rProcessing => %d Total => %d", num_ch,(width*hight),value,ch);
-			x = num_ch%hight;
-			y = num_ch/hight;
+			printf("\rProcessing => %d Total => %d", num_ch,(width*hight));
+			write_img(img_file,value,value,value);			
 
 			num_ch++;
 		}
 
 
 		fclose(txt_file);
-
-
-		FILE * image_file = fopen("text.bmp","wb"); 
-		create_image(image_file,width,hight,24,width,hight,0,0);
-	
-		for (int i = 0; i < hight; ++i)
-		{
-			for (int j = 0; j < width; ++j)
-			{
-				float pixel_val = image[i][j]; 
-
-				write_img(image_file,i,j,pixel_val,pixel_val,pixel_val);
-
-			}
-		
-		}
-
-		fclose(image_file);
-
-		printf("\n\n");
+		fclose(img_file);
+		printf("\n");
 
 		return 0;
 	}

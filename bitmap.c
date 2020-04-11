@@ -6,7 +6,7 @@
 # define BMP_INFO_HEADER_SIZE 40
 
 
-struct BFH
+struct BITMAP_FILE_HEADER
 {
 	char signature[2];
 	int size;
@@ -16,7 +16,7 @@ struct BFH
 		
 };
 
-struct BIH
+struct BITMAP_IMAGE_HEADER
 {
 	unsigned int header_size;
 	int width;
@@ -36,8 +36,8 @@ struct BIH
 
 void create_image(FILE * image ,int width, int hight,int bit_per_pix,int H_res,int V_res,int colors,int imp_clr){
 
-	struct BFH bfh;
-	struct BIH bih;
+	struct BITMAP_FILE_HEADER bfh;
+	struct BITMAP_IMAGE_HEADER bih;
 
 	int img_size = width * hight;
 
@@ -70,7 +70,7 @@ void create_image(FILE * image ,int width, int hight,int bit_per_pix,int H_res,i
 	//return image;
 }
 
-void write_img(FILE * img, int x, int y, float r, float g , float b){
+void write_img(FILE * img,float r, float g , float b){
 
 	unsigned char color[3] = {b,g,r};
 	fwrite(color,1,sizeof(color),img);
